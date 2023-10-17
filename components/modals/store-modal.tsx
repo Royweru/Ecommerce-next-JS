@@ -36,6 +36,7 @@ export const StoreModal = () => {
           description:"Success!"
         })
         router.refresh() 
+        form.reset()
     } catch (error) {
        console.error(error),
        toast({
