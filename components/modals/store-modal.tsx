@@ -6,7 +6,14 @@ import { Modal } from "../ui/modal";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useState } from "react";
@@ -19,7 +26,7 @@ const formSchema = z.object({
 });
 
 export const StoreModal = () => {
-  const router = useRouter()
+  const router = useRouter();
   const storeModal = useStoreModal();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -31,24 +38,20 @@ export const StoreModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-        await axios.post('/api/stores',values)
-        toast({
-          description:"Success!"
-        })
-        router.refresh() 
-        form.reset()
-    } catch (error) {
-       console.error(error),
-       toast({
-        description:"Ooopsy something went wrong!",
-        variant:"destructive"
-       })
-    }
+      const res = await axios.post("/api/stores", values);
 
-    
+      form.reset();
+      window.location.assign(`/${res.data.id}`);
+    } catch (error) {
+      console.error(error),
+        toast({
+          description: "Ooopsy something went wrong!",
+          variant: "destructive",
+        });
+    }
   };
 
-  const isLoading = form.formState.isSubmitting
+  const isLoading = form.formState.isSubmitting;
   return (
     <Modal
       title=" Create store"
@@ -67,19 +70,31 @@ export const StoreModal = () => {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                        <Input disabled={isLoading} placeholder="E-commerce" {...field} />
+                      <Input
+                        disabled={isLoading}
+                        placeholder="E-commerce"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <div className=" p-6 space-x-2 flex items-center justify-end w-full">
-               <Button disabled={isLoading} variant="outline" onClick={storeModal.onClose}>
-                 Cancel
-               </Button>
-               <Button disabled={isLoading} type="submit" variant="destructive">
-                 Continue
-               </Button>
+                <Button
+                  disabled={isLoading}
+                  variant="outline"
+                  onClick={storeModal.onClose}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  disabled={isLoading}
+                  type="submit"
+                  variant="destructive"
+                >
+                  Continue
+                </Button>
               </div>
             </form>
           </Form>

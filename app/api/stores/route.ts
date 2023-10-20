@@ -1,15 +1,15 @@
 import { auth } from "@clerk/nextjs"
 import { NextResponse } from "next/server"
-
+import { currentUser } from "@clerk/nextjs"
 import prisma from '@/lib/prismadb'
 
 export async function POST(
     req:Request
 ) {
     try {
-        const {userId} = auth()
-
-        if(!userId){
+        
+        const user = await currentUser()
+        if(!user){
             return new NextResponse("unauthorized",{status:401})
         }
 
@@ -23,7 +23,7 @@ export async function POST(
         const store = await prisma.store.create({
             data:{
                 name,
-                userId
+                userId:user.id
             }
         })
         return NextResponse.json(store)
