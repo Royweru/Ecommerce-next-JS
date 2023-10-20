@@ -16,7 +16,13 @@ const MainNav = ({
             href:`/${params.storeId}/settings`,
             label:'settings',
             active:pathName===`/${params.storeId}/settings`
-        }
+        },
+        {
+            href:`/${params.storeId}/`,
+            label:'Overview',
+            active:pathName===`/${params.storeId}`
+        },
+        
     ]
   return (
    <nav 
