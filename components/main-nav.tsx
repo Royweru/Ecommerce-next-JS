@@ -22,7 +22,11 @@ const MainNav = ({
             label:'Overview',
             active:pathName===`/${params.storeId}`
         },
-        
+        {
+            href:`/${params.storeId}/billboards`,
+            label:'Billboards',
+            active:pathName===`/${params.storeId}/billboards`
+        },
     ]
   return (
    <nav 
