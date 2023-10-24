@@ -3,7 +3,7 @@
 import Heading from '@/components/heading'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
-import { Billboard } from '@prisma/client'
+
 import { Plus } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 import React from 'react'
@@ -30,7 +30,7 @@ const BillboardClient:React.FC<BillboardClientProps> = ({
         </Button>
         </div>
     <Separator />
-     <DataTable columns={columns} data={data}/>
+     <DataTable searchKey='label' columns={columns} data={data}/>
     </>
   )
 }
