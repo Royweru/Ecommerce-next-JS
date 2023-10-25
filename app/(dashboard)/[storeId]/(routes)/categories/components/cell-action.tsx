@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { BillboardColumn } from "./columns";
+import { CategoryColumn } from "./columns";
 import AlertModal from "@/components/modals/alert-modal";
 import {
   DropdownMenu,
@@ -15,7 +15,7 @@ import { toast } from "@/components/ui/use-toast";
 import { useParams, useRouter } from "next/navigation";
 
 interface CellActionProps {
-  data: BillboardColumn;
+  data: CategoryColumn;
 }
 
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
@@ -25,24 +25,27 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const params = useParams();
   const onDelete = async () => {
     try {
-      await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+      setIsLoading(true)
+      await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
       router.refresh();
     
       toast({
-        description: "Billboard was successfully deleted",
+        description: "Category was successfully deleted",
       });
     } catch (error: any) {
       toast({
         variant: "destructive",
         description:
-          "Make sure you remove all categories out of this billboard",
-      });
+          "Make sure you remove all products in this category",
+      }); 
+    }finally{
+      setIsLoading(false)
     }
   };
   const oncopy = (id: string) => {
     navigator.clipboard.writeText(id);
     toast({
-      description: "Id copied to the clipboard successfully",
+      description: "Category Id copied to the clipboard successfully",
     });
   };
   
@@ -69,7 +72,7 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/categories/${data.id}`)
             } 
           >
             <Edit className="mr-2 h-4 w-4" />
