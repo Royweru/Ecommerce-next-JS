@@ -31,7 +31,9 @@ import { toast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
  name: z.string().min(2),
-  value:z.string().min(1)
+  value:z.string().regex(/^#/,{
+    message:"String must have a valid hex code"
+  })
 });
 
 type ColorFormValues = z.infer<typeof formSchema>;
@@ -167,7 +169,7 @@ const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
                     <div className=" flex items-center gap-x-4">
                     <Input
                       disabled={isLoading}
-                      placeholder="size value.."
+                      placeholder="color value.."
                       {...field}
                     />
                     <div className=" border p-4 rounded-full" style={{backgroundColor:field.value}} />

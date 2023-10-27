@@ -63,7 +63,7 @@ export async function GET(
         
        
         if(!params.storeId){
-            return new NextResponse("storeId is required",{status:400})
+            return new NextResponse("store id is required",{status:400})
         }
         
         const colors = await prisma.color.findMany({

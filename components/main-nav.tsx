@@ -42,7 +42,11 @@ const MainNav = ({
             label:'Colors',
             active:pathName===`/${params.storeId}/colors`
         },
-    ]
+        {
+            href:`/${params.storeId}/products`,
+            label:'Products',
+            active:pathName===`/${params.storeId}/products`
+        },]
   return (
    <nav 
     className={cn(" flex items-center space-x-4 lg:space-x-6",className)}
