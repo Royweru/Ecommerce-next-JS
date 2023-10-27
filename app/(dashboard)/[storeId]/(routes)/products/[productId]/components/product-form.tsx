@@ -20,6 +20,7 @@ import AlertModal from "@/components/modals/alert-modal";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -30,6 +31,7 @@ import { toast } from "@/components/ui/use-toast";
 import ImageUpload from "@/components/ui/image-upload";
 import { parse } from "path";
 import { url } from "inspector";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const formSchema = z.object({
  name: z.string().min(2),
@@ -95,16 +97,16 @@ const ProductForm: React.FC<ProductFormProps> = ({
     try {
       if (initialData) {
         await axios.patch(
-          ` /api/${params.storeId}/billboards/${params.billboardId}`,
+          ` /api/${params.storeId}/products/${params.productId}`,
           data
         );
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, data);
+        await axios.post(`/api/${params.storeId}/products`, data);
         form.reset();
       }
 
       router.refresh();
-      router.push(`/${params.storeId}/billboards`)
+      router.push(`/${params.storeId}/products`)
       toast({
         description: toastMessage,
       });
@@ -121,13 +123,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
   const onDelete = async () => {
     try {
       await axios.delete(
-        `/api/${params.storeId}/billboards/${params.billboardId}`
+        `/api/${params.storeId}/products/${params.productId}`
       );
       router.refresh();
-      router.push("/");
+      router.push(`/${params.storeId}/products`);
       toast({
-        variant: "destructive",
-        description: "store was successfully deleted",
+        
+        description: "Product was successfully deleted!",
       });
     } catch (error: any) {
       toast({
@@ -295,6 +297,46 @@ const ProductForm: React.FC<ProductFormProps> = ({
                       {...field}
                     />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+              <FormField
+              control={form.control}
+              name="isFeatured"
+              render={({ field }) => (
+                <FormItem  className=" flex flex-row items-start space-x-3 space-y-0 rounded-md p-4 border">
+                  <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
+                  </FormControl>
+                  <div className=" space-y-1 leading-none">
+                    <FormLabel>
+                      Featured
+                    </FormLabel>
+                    <FormDescription>
+                      This product will appear on the home page
+                    </FormDescription>
+                    </div>      
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+              <FormField
+              control={form.control}
+              name="isArchived"
+              render={({ field }) => (
+                <FormItem  className=" flex flex-row items-start space-x-3 space-y-0 rounded-md p-4 border">
+                  <FormControl>
+                  <Checkbox checked={field.value} onCheckedChange={field.onChange}/>
+                  </FormControl>
+                  <div className=" space-y-1 leading-none">
+                    <FormLabel>
+                      Archived
+                    </FormLabel>
+                    <FormDescription>
+                      This product will not appear anywhere in the store
+                    </FormDescription>
+                    </div>      
                   <FormMessage />
                 </FormItem>
               )}
