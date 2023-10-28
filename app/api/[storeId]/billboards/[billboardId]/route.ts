@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: { billboardId: string } }
 ) {
   try {
