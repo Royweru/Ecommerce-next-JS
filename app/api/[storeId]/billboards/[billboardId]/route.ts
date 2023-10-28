@@ -2,17 +2,20 @@ import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 
+
+
 export async function GET(
   req: Request,
-  { params }: { params: { billboardId: string } }
+  { params }: { params: {storeId:string, billboardId: string } }
 ) {
   try {
     if (params.billboardId) {
-      return new NextResponse("Billboard id is required!", { status: 400 });
+      return new NextResponse("billboard id is required!", { status: 400 });
     }
     const billboard = await prisma.billboard.findUnique({
       where: {
         id: params.billboardId,
+        storeId:params.storeId
       },
     });
     return NextResponse.json(billboard);
