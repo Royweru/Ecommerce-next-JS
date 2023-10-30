@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { productId: string } }
 ) {
   try {
-    if (params.productId) {
+    if (!params.productId) {
       return new NextResponse("product id is required!", { status: 400 });
     }
     const product = await prisma.product.findUnique({

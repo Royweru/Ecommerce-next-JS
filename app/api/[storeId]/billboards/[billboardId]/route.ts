@@ -9,18 +9,17 @@ export async function GET(
   { params }: { params: {storeId:string, billboardId: string } }
 ) {
   try {
-    if (params.billboardId) {
+    if (!params.billboardId) {
       return new NextResponse("billboard id is required!", { status: 400 });
     }
     const billboard = await prisma.billboard.findUnique({
       where: {
-        id: params.billboardId,
-        storeId:params.storeId
+        id: params.billboardId
       },
     });
     return NextResponse.json(billboard);
   } catch (error) {
-    console.log(`[BILLBOARD_GET]`, error);
+    console.log('[BILLBOARD_GET]', error);
     return new NextResponse("internal error", { status: 500 });
   }
 }

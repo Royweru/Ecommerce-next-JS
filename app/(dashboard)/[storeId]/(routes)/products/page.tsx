@@ -19,7 +19,7 @@ const ProductsPage =async ({params}:{
           color:true,
         },
         orderBy:{
-            createdAt:"asc"
+            createdAt:"desc"
         }
     })
 

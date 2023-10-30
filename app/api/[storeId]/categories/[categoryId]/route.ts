@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { categoryId: string } }
 ) {
   try {
-    if (params.categoryId) {
+    if (!params.categoryId) {
       return new NextResponse("Category id is required!", { status: 400 });
     }
     const category = await prisma.category.findUnique({

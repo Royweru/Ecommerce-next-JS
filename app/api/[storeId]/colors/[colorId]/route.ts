@@ -7,7 +7,7 @@ export async function GET(
   { params }: { params: { colorId: string } }
 ) {
   try {
-    if (params.colorId) {
+    if (!params.colorId) {
       return new NextResponse("color id is required!", { status: 400 });
     }
     const billboard = await prisma.size.findUnique({
